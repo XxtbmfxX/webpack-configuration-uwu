@@ -1,8 +1,13 @@
 {
     "compilerOptions": {
-        "target": "es2017",
-        "allowSyntheticDefaultImports": false,
-        "baseUrl": " ./",
+        "outDir": "./dist",
+        "target": "es5",
+        "module": "es6",
+        "jsx": "react",
+        "noImplicitAny": true,
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
+        "baseUrl": "./",
         "paths": {
             "@components/": [
                 "src/components/"
@@ -26,9 +31,5 @@
                 "src/assets/"
             ]
         }
-    },
-    "exclude": [
-        "node_modules",
-        "dist"
-    ]
+    }
 }

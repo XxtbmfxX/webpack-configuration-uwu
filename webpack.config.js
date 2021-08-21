@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CSSMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -13,7 +14,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.tsx', '.js', '.jsx'],
     alias: {
       '@components': path.resolve(__dirname, 'src/components/'),
       '@containers': path.resolve(__dirname, 'src/containers/'),
@@ -21,6 +22,7 @@ module.exports = {
       '@hooks': path.resolve(__dirname, 'src/hooks/'),
       '@routes': path.resolve(__dirname, 'src/routes/'),
       '@styles': path.resolve(__dirname, 'src/styles'),
+      '@assets': path.resolve(__dirname, 'src/assets'),
     },
   },
   module: {
@@ -50,6 +52,15 @@ module.exports = {
           'stylus-loader',
         ],
       },
+      {
+        test: /\.(png|jpg)$/,
+        type: 'asset',
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: '/node_modules/',
+      },
     ],
   },
   devServer: {
@@ -64,7 +75,16 @@ module.exports = {
       filename: 'assets/[name].css',
     }),
     new CleanWebpackPlugin(),
+    new ImageMinimizerPlugin({
+      minimizerOptions: {
+        plugins: [
+          ['optipng', { optimizationLevel: 5 }],
+          ['jpegtran', { progressive: true }],
+        ],
+      },
+    }),
   ],
+
   optimization: {
     minimize: true,
     minimizer: [new CSSMinimizerPlugin(), new TerserPlugin()],
