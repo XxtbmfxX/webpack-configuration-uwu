@@ -6,23 +6,24 @@ import Layout from '../components/Layout';
 import NotFound from '../containers/NotFound';
 
 import useInitialState from '../hooks/useInitialSate';
-
+import AppContext from '../context/AppContext';
 const App = () => {
   const initialState = useInitialState();
   const isEmpty = Object.keys(initialState.products).length;
-  console.log(isEmpty);
   return (
     <>
       {isEmpty > 0 ? (
-        <BrowserRouter>
-          <Layout>
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/checkout" component={Checkout} />
-              <Route component={NotFound} />
-            </Switch>
-          </Layout>
-        </BrowserRouter>
+        <AppContext.Provider value={initialState}>
+          <BrowserRouter>
+            <Layout>
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/checkout" component={Checkout} />
+                <Route component={NotFound} />
+              </Switch>
+            </Layout>
+          </BrowserRouter>
+        </AppContext.Provider>
       ) : (
         <h1>Loading ...</h1>
       )}
