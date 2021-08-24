@@ -1,2 +1,3 @@
 # platzi-store
-Curso de Pruebas unitarias con Jest
+Código de platzi: Curso de Pruebas unitarias con Jest
+usado para aprender configuracion de Webpack 
