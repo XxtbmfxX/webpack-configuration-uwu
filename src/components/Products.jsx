@@ -4,10 +4,11 @@ import '@styles/components/Products.styl';
 import Product from './Product';
 
 const Products = () => {
-  const { products } = useContext(AppContext);
+  const { products, cart } = useContext(AppContext);
 
   const handleAddToCart = product => () => {
     console.log(product);
+    cart.push(Array(product));
   };
 
   return (

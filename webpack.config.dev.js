@@ -3,10 +3,14 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    home: './src/index.js',
+    header: './src/Header/index.js',
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.js',
   },
   resolve: {
     extensions: ['.tsx', '.js', '.jsx'],
@@ -59,10 +63,10 @@ module.exports = {
     ],
   },
   devServer: {
-    historyApiFallback: true,
-    contentBase: path.join(__dirname, 'dist'),
+    // historyApiFallback: true,
     compress: true,
     port: 3005,
+    hot: true,
   },
   plugins: [
     new HtmlWebPackPlugin({
@@ -81,4 +85,9 @@ module.exports = {
       },
     }),
   ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
 };
